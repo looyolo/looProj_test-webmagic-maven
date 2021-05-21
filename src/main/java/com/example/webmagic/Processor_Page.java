@@ -4,13 +4,15 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import javax.management.JMException;
+
 /*
  * 代码解释：
  *         爬取 "hao123"首页中"天气预报"的气象、气温等数据。
  *             有时间，尝试爬取 "搜狗搜索"首页中"天气预报"的，由于不支持 Xpath Axis ，编写 表达式 有一些难度，值得挑战。
  *
  *  */
-public class PP_SogouHomePage implements PageProcessor {
+public class Processor_Page implements PageProcessor {
     // 设定 抓取网站 的相关配置，包括 字符编码、抓取间隔、抓取重试次数
     private final Site site = Site.me().setCharset("utf-8").setRetryTimes(3).setSleepTime(1000);
 
@@ -38,7 +40,7 @@ public class PP_SogouHomePage implements PageProcessor {
                 page.getHtml().xpath("//*[@id=\"topColumn\"]//a[@class=\"line-item weather-tomorrow\"]//span[@class=\"weather-temp\"]/text()").toString());
 
         // 从后续发现的 url 来抽取，个数不限，经常需要使用 regex 表达式来过滤得到想要的
-        page.addTargetRequests(page.getHtml().links().regex("(https://www\\.hao123\\.com/[\\\\w\\\\-]+/[\\\\w\\\\-]+)").all());
+        page.addTargetRequests(page.getHtml().links().regex("(https://www.hao123.com[/\\w]+)").all());
     }
 
     // 必须返回 site 实例对象，否则启动会报错 Exception in thread "main" java.lang.NullPointerException

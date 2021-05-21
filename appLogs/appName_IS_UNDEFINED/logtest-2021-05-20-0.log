@@ -1,0 +1,5 @@
+2021-05-20 20:59:42.376 [ main ] - [ DEBUG ] [ us.codecraft.webmagic.scheduler.QueueScheduler : 36 ] - push to queue https://www.hao123.com/
+2021-05-20 20:59:47.079 [ main ] - [ DEBUG ] [ u.c.webmagic.downloader.HttpClientGenerator : 68 ] - supportedProtocols: SSLv3, TLSv1, TLSv1.1, TLSv1.2
+2021-05-20 20:59:47.128 [ main ] - [ INFO  ] [ us.codecraft.webmagic.Spider : 306 ] - Spider www.hao123.com started!
+2021-05-20 20:59:47.779 [ pool-1-thread-1 ] - [ INFO  ] [ u.c.webmagic.downloader.HttpClientDownloader : 86 ] - downloading page success https://www.hao123.com/
+2021-05-20 20:59:48.953 [ main ] - [ INFO  ] [ us.codecraft.webmagic.Spider : 338 ] - Spider www.hao123.com closed! 1 pages downloaded.
