@@ -8,6 +8,9 @@ import us.codecraft.webmagic.pipeline.ConsolePipeline;
 
 import javax.management.JMException;
 
+/*
+*
+*  */
 public class SpiderRunner {
 
     public static void setUp() {
@@ -16,6 +19,8 @@ public class SpiderRunner {
 
     public static void main(String[] args) throws JMException {
         /*
+        * 入口 是 Spider 。
+        *
         * 步骤：
         *     1：创建一个 Spider 对象
         *     2：添加要从中爬取数据的 Url 字符串，可以多个，但这里不是数组
@@ -26,9 +31,9 @@ public class SpiderRunner {
         *
         *  */
         Spider spider_hao123 = Spider.create(new Processor_Page())
-                .addUrl("https://www.hao123.com/")
                 .addPipeline(new ConsolePipeline())
-                .thread(3);
+                .thread(3)
+                .addUrl("https://www.hao123.com/");
         SpiderMonitor.instance().register(spider_hao123);
 
 //        // 设定 代理，则不再经过 Site 爬取网站。代理可以是多个
