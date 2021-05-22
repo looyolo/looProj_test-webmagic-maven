@@ -7,16 +7,27 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import javax.management.JMException;
 
 /*
+ * 编写 Processor 类 抽取逻辑
+ *
  * 代码解释：
- *         爬取 "hao123"首页中"天气预报"的气象、气温等数据。
- *             有时间，尝试爬取 "搜狗搜索"首页中"天气预报"的，由于不支持 Xpath Axis ，编写 表达式 有一些难度，值得挑战。
+ *     PageProcessor 的定制，分为 3 个部分：
+ *         （1）爬虫的配置
+ *               包括编码、抓取间隔、超时时间、重试次数等，也包括一些模拟的参数，例如 User Agent、cookie，以及 proxy 代理的设置
+ *         （2）页面元素的抽取，保存结果
+ *               page.getHtml() 返回的是一个 Html 对象，它实现了 Selectable 接口。这个接口包含一些重要的方法，支持"链式调用"
+ *               三种抽取技术：XPath、正则表达式 和 CSS选择器。另外，对于 JSON 格式的内容，可使用 JsonPath 进行解析
+ *               定制 Pipeline ，可以实现保存结果到文件、数据库等
+ *               处理非HTTP GET请求
+ *         （3）后续链接的主动发现，并爬取
+ *               page.addTargetRequests() 将发现的链接加入到待抓取的队列中去，对应的日志打印，如下，
+ *                 2021-05-22 13:30:27.829 [pool-1-thread-1] DEBUG us.codecraft.webmagic.scheduler.QueueScheduler - push to queue https://www.hao123.com/haoxue
  *
  *  */
 public class Processor_Page implements PageProcessor {
     // 设定 抓取网站 的相关配置，包括 字符编码、抓取间隔、抓取重试次数
     private final Site site = Site.me().setCharset("utf-8").setRetryTimes(3).setSleepTime(1000);
 
-    // process 是 定制 爬虫逻辑 的 核心接口，在这里 编写 抽取逻辑
+    // process 是 定制 爬虫逻辑 的 核心接口，在这里 编写 抽取逻辑，并保存抽取结果
     @Override
     public void process(Page page) {
         // 抽取 “地市”

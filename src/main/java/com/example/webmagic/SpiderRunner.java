@@ -2,13 +2,20 @@ package com.example.webmagic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.JedisPool;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
+import us.codecraft.webmagic.scheduler.RedisScheduler;
 
 import javax.management.JMException;
 
-/*
+/* 实现 基本的 网络爬虫
+*     引入 webmagic-core 包即可使用此功能。
+*
+*     示例：
+*         爬取 "hao123"首页中"天气预报"的气象、气温等数据。
+*             有时间的话，尝试爬取 "搜狗搜索"首页中"天气预报"的，由于不支持 Xpath Axis ，编写 表达式 有一些难度，值得挑战。
 *
 *  */
 public class SpiderRunner {
@@ -42,7 +49,10 @@ public class SpiderRunner {
 //                SimpleProxyProvider.from(
 //                        new Proxy("localhost",10101),
 //                        new Proxy("101.101.101.101",8888,"username","password")));
+//        // 设定 Downloader ，一个 Spider 只能有个一个 Downloader
 //        spider_hao123.setDownloader(httpClientDownloader);
+//        // 设置 Scheduler ，一个 Spider 只能有个一个 Scheduler
+//        spider_hao123.setScheduler(new RedisScheduler(new JedisPool("localhost",6379)));
 
         spider_hao123.run();
     }
